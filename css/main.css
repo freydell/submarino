@@ -13,20 +13,20 @@
 	border: 1px solid #000;
 }
 #juego{
-	width: 469px;
-	height: 661px;
+	width: 360px;
+	height: 640px;
 	margin: auto;
 	border: 1px solid #000;
 }
 #instrucciones{
-	width: 469px;
-	height: 661px;
+	width: 360px;
+	height: 640px;
 	margin: auto;
 	border: 1px solid #000;
 }
 #creditos{
-	width: 469px;
-	height: 661px;
+	width: 360px;
+	height: 640px;
 	margin: auto;
 	border: 1px solid #000;
 }
@@ -41,12 +41,16 @@
 
 }
 
-.estilo_menu{	
+.estilo_menu{
+	
+	
 	border: 1px solid #000;
 	margin: auto;
 	margin-left:50px; 
 	margin-right:50px;
 	margin-top:350px;
+
+	
 
 }
 
