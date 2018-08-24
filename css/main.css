@@ -58,19 +58,32 @@
 }
 
 .estilo_instrucciones{
-	position:relative;
+	
+	margin: auto;
+	
+	
+}
+
+.estilo_creditos{
+	
 	margin: auto;
 	
 	
 }
 
 .posicion_atras{
-	position:absolute;
-	bottom:40px;
-	right:15px;
+	
+	margin: auto;
+	margin-top: 550px;
+	margin-bottom:40px;
+	
+	margin-left: 430px;
 	width: 220;
 	height: 128;
+	float:right;
 }
+
+
 
 
 
