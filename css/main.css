@@ -1,8 +1,16 @@
+.show{
+    display: block;
+}
+.hide{
+    display: none;
+}
+
 #inicio{
 	width: 469px;
 	height: 661px;
 	margin: auto;
 	border: 1px solid #000;
+
 }
 #menu{
 	background: url(../img/fondo_menu.jpg) no-repeat;
@@ -19,6 +27,7 @@
 	height: 661px;
 	margin: auto;
 	border: 1px solid #000;
+
 }
 #instrucciones{
 	background: url(../img/instrucciones.jpg) no-repeat;
@@ -27,6 +36,7 @@
 	height: 661px;
 	margin: auto;
 	border: 1px solid #000;
+
 }
 #creditos{
 	background: url(../img/fondo-creditos.jpg) no-repeat;
@@ -35,6 +45,7 @@
 	height: 661px;
 	margin: auto;
 	border: 1px solid #000;
+
 }
 
 
