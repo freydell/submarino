@@ -1,15 +1,18 @@
 <!DOCTYPE html> 
 <html>
 
-	<head>
+<head>
 	<title>Submarino</title>
-		<link rel="stylesheet" type="text/css" href="css/main.css">
-		<meta name="tipo_contenido"  content="text/html;" http-equiv="content-type" charset="utf-8">
-	</head>
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+</head>
 
 
 	<body bgcolor="#dddddd">
-		<section id="inicio" class="show"> 
+		<section id="inicio"> 
 			<div class="estilo_inicio">
                 <img class="barra" src="img/barra-carga.gif" width="350" height="50">
             </div>
@@ -17,48 +20,56 @@
 
 <br>
 
-    <section id="menu" class="show"> 
+    <section id="menu" class="d-none"> 
         <div class="estilo_menu">
-            <center><input type="image" src="img/jugar.png" width="225" height="75"/></center>
+
+            <center><input id="b1" type="image" src="img/jugar.png" width="225" height="75"/></center>
             <br>
-            <center><input type="image" src="img/instrucciones.png"  width="225" height="75"/></center>
+            <center><input id="b2" type="image" src="img/instrucciones.png"  width="225" height="75"/></center>
             <br>
-            <center><input type="image" src="img/creditos.png" width="225" height="75"/></center>
-
-
-
-            <button id="creditos_home">Créditos</button>
-
-
+            <center><input id="b3" type="image" src="img/creditos.png" width="225" height="75"/></center>
             
         </div>
     </section>
 
 <br>
 
-    <section id="juego" class="show"> 
+    <section id="juego" class="d-none"> 
         <div class="estilo_juego">
+
+            <input class="b4 posicion_atras" type="image" src="img/atrasmall.png">
+
         </div>
     </section>
 
 <br>
 
-    <section id="instrucciones" class="show"> 
+    <section id="instrucciones" class="d-none"> 
         <div class="estilo_instrucciones">
-            <input class="posicion_atras" type="image" src="img/atrasmall.png">
+
+            <input class="b4 posicion_atras" type="image" src="img/atrasmall.png">
+
         </div>
     </section>
 
 <br>
 
-    <section id="creditos" class="show">      
+    <section id="creditos" class="d-none">      
         <div class="estilo_creditos">
-            <input class="posicion_atras" type="image" src="img/atrasmall.png">
+
+            <input class="b4 posicion_atras" type="image" src="img/atrasmall.png">
+
         </div>
     </section>
 
 
-    <script type="text/javascript" src="js/main.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="js/main.js"></script>
+
+
+
 </body>
 
 </html>

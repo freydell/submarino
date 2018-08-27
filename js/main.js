@@ -1,23 +1,43 @@
-var inicio, menu, juego, instrucciones, creditos;
 
-//inicializacion de secciones
-inicio = this.document.getElementById('inicio');
-men = this.document.getElementById('menu');
-juego = this.document.getElementById('juego');
-creditos = this.document.getElementById('creditos');
-instrucciones = this.document.getElementById('instrucciones');
+$(function () {
 
-//variables de menu
-var btnCreditos = document.getElementById('creditos_home');
+	setTimeout(function(){ 
+		$("#inicio").addClass( "d-none" );
+        $("#menu").removeClass( "d-none" );; 
+	}, 3000);
 
-function muestracreditos(){
-    men.classlist.remove('show');
-    men.classlist.add('hide');
 
-    creditos.classList.remove('hide');
-    creditos.classlist.add('show');
-}
+    $("#b1").click(function () {
+        $("#inicio").addClass( "d-none" );
+        $("#menu").addClass( "d-none" );
+        $("#juego").removeClass( "d-none" );
+        $("#instrucciones").addClass( "d-none" );
+        $("#creditos").addClass( "d-none" );
+    });
 
-window.addEventListener('load', function () {
-    btnCreditos.onclick= muestracreditos;
+    $("#b2").click(function () {
+        $("#inicio").addClass( "d-none" );
+        $("#menu").addClass( "d-none" );
+        $("#juego").addClass( "d-none" );
+        $("#instrucciones").removeClass( "d-none" );
+        $("#creditos").addClass( "d-none" );
+    });
+
+    $("#b3").click(function () {
+        $("#inicio").addClass( "d-none" );
+        $("#menu").addClass( "d-none" );
+        $("#juego").addClass( "d-none" );
+        $("#instrucciones").addClass( "d-none" );
+        $("#creditos").removeClass( "d-none" );
+    });
+
+$(".b4").click(function () {
+        $("#inicio").addClass( "d-none" );
+        $("#menu").removeClass( "d-none" );
+        $("#juego").addClass( "d-none" );
+        $("#instrucciones").addClass( "d-none" );
+        $("#creditos").addClass( "d-none" );
+    });
+
+
 });

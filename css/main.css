@@ -1,17 +1,12 @@
-.show{
-    display: block;
-}
-.hide{
-    display: none;
-}
-
 #inicio{
 	width: 430px;
 	height: 736px;
 	margin: auto;
 	border: 1px solid #000;
 
+
 }
+
 #menu{
 	background: url(../img/fondo-menu.png) no-repeat;
 	background-size: cover;
@@ -20,6 +15,7 @@
 	margin: auto;
 	border: 1px solid #000;
 }
+
 #juego{
 	background: url(../img/submarino.png) no-repeat;
 	background-size: cover;
@@ -29,6 +25,7 @@
 	border: 1px solid #000;
 
 }
+
 #instrucciones{
 	background: url(../img/fondo-instrucciones.png) no-repeat;
 	background-size: cover;
@@ -38,6 +35,7 @@
 	border: 1px solid #000;
 
 }
+
 #creditos{
 	background: url(../img/fondo-creditos.png) no-repeat;
 	background-size: cover;
@@ -52,7 +50,6 @@
 .estilo_inicio{
 	background: url(../img/carga.png) no-repeat;
 	background-size: cover;
-
 	width: 100%;
 	height: 100%;
 
@@ -60,27 +57,23 @@
 
 .estilo_menu{
 
-	
 	margin: auto;
 	margin-left:50px; 
 	margin-right:50px;
 	margin-top:380px;
-	border: 1px solid #000
-
+	
 }
 
 .estilo_instrucciones{
 	
 	margin: auto;
-	
-	
+		
 }
 
 .estilo_creditos{
 	
 	margin: auto;
-	
-	
+		
 }
 
 .posicion_atras{
@@ -120,9 +113,20 @@ header {
 	margin-right: 100px;
 	margin-bottom: 20px ;
 	
-
 }
 
+
+.d-none {
+    display: none;
+}
+
+.show{
+    display: block;
+}
+
+.hide{
+    display: none;
+}
 
 
 
