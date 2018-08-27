@@ -4,7 +4,6 @@
 	margin: auto;
 	border: 1px solid #000;
 
-
 }
 
 #menu{
@@ -46,7 +45,6 @@
 
 }
 
-
 .estilo_inicio{
 	background: url(../img/carga.png) no-repeat;
 	background-size: cover;
@@ -87,7 +85,6 @@
 	float:right;
 }
 
-
 .barra{
 
 margin: auto;
@@ -97,24 +94,6 @@ margin-top:470px;
 
 
 }
-
-
-header {
-	width: 469px;
-	height: 200px;
-	border: 1px solid #000;
-}
-
-#logo{
-		
-	margin: auto;
-	margin-left: 100px;
-	margin-top: 20px;
-	margin-right: 100px;
-	margin-bottom: 20px ;
-	
-}
-
 
 .d-none {
     display: none;

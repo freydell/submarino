@@ -31,13 +31,12 @@ $(function () {
         $("#creditos").removeClass( "d-none" );
     });
 
-$(".b4").click(function () {
+	$(".b4").click(function () {
         $("#inicio").addClass( "d-none" );
         $("#menu").removeClass( "d-none" );
         $("#juego").addClass( "d-none" );
         $("#instrucciones").addClass( "d-none" );
         $("#creditos").addClass( "d-none" );
     });
-
 
 });
