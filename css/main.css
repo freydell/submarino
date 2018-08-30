@@ -1,25 +1,3 @@
-section{
-	overflow: hidden;
-}
-body{
-	margin: 0%;
-	overflow: hidden;
-}
-html,body{
-	height:100%;
-	width:100%;
-	overflow:hidden; /* or overflow:auto; if you want scrollbars */
-  }
-#diego{
-	width: 100%;
-	height: 100%;
-	overflow: hidden;
-}
-#background{
-	background: url("../img/fondo-menu.png") no-repeat;
-	background-size: contain;
-}
-
 #inicio{
 	width: 430px;
 	height: 736px;
@@ -29,18 +7,17 @@ html,body{
 }
 
 #menu{
-	/* background: url(../img/fondo-menu.png) no-repeat;
-	background-size: cover; */
-	/* width: 430px;
-	height: 736px; */
-	widows: 100%;
-	height: 100%;
+	background: url(../img/fondo-menu.png) no-repeat;
+	background-size: cover;
+	width: 430px;
+	height: 736px;
+	margin: auto;
 	border: 1px solid #000;
 }
 
 #juego{
 	background: url(../img/submarino.png) no-repeat;
-	background-size: contain;
+	background-size: cover;
 	width: 430px;
 	height: 736px;
 	margin: auto;
@@ -83,13 +60,6 @@ html,body{
 	margin-right:50px;
 	margin-top:380px;
 	
-}
-
-.estilo_juego{
-	width: 80%;
-	height: 70%;
-	position: absolute;
-	left: 10%;
 }
 
 .estilo_instrucciones{
@@ -135,12 +105,6 @@ margin-top:470px;
 
 .hide{
     display: none;
-}
-
-#panel{
-	width: 100%;
-	height: 100%;
-	background: #000;
 }
 
 
