@@ -1,112 +1,205 @@
-#inicio{
-	width: 430px;
-	height: 736px;
-	margin: auto;
-	border: 1px solid #000;
-
+body,html{
+    overflow: scroll;
+    overflow: hidden;
+    height: 100%;
+    width:  100%; 
+    margin: 0px;
+    padding: 0;
 }
-
-#menu{
-	background: url(../img/fondo-menu.png) no-repeat;
-	background-size: cover;
-	width: 430px;
-	height: 736px;
-	margin: auto;
-	border: 1px solid #000;
+section{
+    z-index: 1;
+    height: 100%;
+    padding-bottom: 5%;
 }
-
-#juego{
-	background: url(../img/submarino.png) no-repeat;
-	background-size: cover;
-	width: 430px;
-	height: 736px;
-	margin: auto;
-	border: 1px solid #000;
-
-}
-
-#instrucciones{
-	background: url(../img/fondo-instrucciones.png) no-repeat;
-	background-size: cover;
-	width: 430px;
-	height: 736px;
-	margin: auto;
-	border: 1px solid #000;
-
-}
-
-#creditos{
-	background: url(../img/fondo-creditos.png) no-repeat;
-	background-size: cover;
-	width: 430px;
-	height: 736px;
-	margin: auto;
-	border: 1px solid #000;
-
-}
-
-.estilo_inicio{
-	background: url(../img/carga.png) no-repeat;
-	background-size: cover;
-	width: 100%;
-	height: 100%;
-
-}
-
-.estilo_menu{
-
-	margin: auto;
-	margin-left:50px; 
-	margin-right:50px;
-	margin-top:380px;
-	
-}
-
-.estilo_instrucciones{
-	
-	margin: auto;
-		
-}
-
-.estilo_creditos{
-	
-	margin: auto;
-		
-}
-
-.posicion_atras{
-	
-	margin: auto;
-	margin-top: 630px;
-	margin-bottom:40px;
-	margin-left: 430px;
-	width: 220;
-	height: 128;
-	float:right;
-}
-
-.barra{
-
-margin: auto;
-margin-left:40px; 
-margin-right:40px;
-margin-top:470px;
-
-
-}
-
-.d-none {
-    display: none;
-}
-
 .show{
     display: block;
 }
-
 .hide{
     display: none;
 }
 
+
+
+
+/*menu*/
+#home{
+   background: url(../img/img/fondo-menu.png) no-repeat;
+    background-size: cover;
+    z-index: -1;
+}
+.botones_home{
+    display: block;
+    margin: auto;
+    width: 80%;
+    height: 10%;
+}
+#botones{
+	margin: auto;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 80%;
+}
+
+
+
+/*record*/
+#record{   
+    background: url(../img/img/fondo-instrucciones.png) no-repeat;
+    background-size: cover; 
+
+}
+#back_from_record{
+    display: block;
+    margin: auto;
+    width: 40%;
+    height: 15%;
+    margin-left: 60%;
+}
+
+
+
+
+/*creditos*/
+#credits{
+    background: url(../img/img/fondo-creditos.png) no-repeat;
+    background-size: cover;
+}
+#back_from_credits{
+    display: block;
+    margin: auto;
+    width: 40%;
+    height: 15%;
+    margin-left: 60%;
+}
+
+
+
+/*jugar*/
+#play{
+    z-index: -1;
+}
+#play_field{
+    z-index: -1;
+    position: absolute;
+    display: block;
+    margin: auto;
+    
+    width: 100%;
+    height: -webkit-fill-available;
+    background: url(../img/img/fondo-juego.gif) no-repeat;
+	background-size: cover;
+}
+
+#mvLeft{
+    position: absolute;
+    top:86%;
+    left: 5%;
+    width: 25%;
+    height: 13%;
+    border: none;    
+    
+    background: url(../img/img/flecha-izq.png) no-repeat;
+	background-size: cover; 
+}
+#mvRight{
+    position: absolute;
+    top:86%;
+    right: 5%;
+    width: 25%;
+    height: 13%;
+    border: none;
+    
+    background: url(../img/img/flecha-der.png) no-repeat;
+    background-size: cover; 
+}
+
+#pts{
+    z-index: -1;
+    text-align: center;
+    line-height: 2;
+    height: 30px;
+    width: 100px;
+    color: #000000;
+    position: relative;
+    display: block;
+    margin: auto;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 30px;
+    
+}
+
+#pause{
+    position: absolute;
+    top: 92%;
+    left: 45%;
+    height: 5%;
+    width: 8%;
+}
+
+#pausePopUp{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    height: 100%;;
+    width: 100%;
+    background: rgba(0,0,0,0.7);
+}
+
+#restart_game{
+    
+    display: block;
+    margin: auto;
+    margin-top: 50%;
+    margin-bottom: 5%;
+    width: 55%;
+    height: 11%;
+    border: none;
+    text-align: center;    
+    font-size: 150%;
+    font-weight: bolder;
+    
+}
+#go_home{
+    
+    display: block;
+    margin: auto;
+    width: 55%;
+    height: 11%;
+    border: none;
+    text-align: center;    
+    font-size: 150%;
+    font-weight: bolder;
+    
+}
+#gameLost{
+    position: absolute;
+    text-align: center;
+    z-index: 1;
+    height: 100%;;
+    width: 100%;
+    background: url(../img/img/fondo_perdida.png) no-repeat;
+    background-size: cover; 
+}
+
+
+
+#puntaje{
+    
+    margin: auto;
+    margin-top: 80%;
+    color: #E1f9EC;
+    font-size: 250%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    
+}
+#play_again{
+    
+    margin: auto;
+    margin-top: 45%;
+    width: 65%;
+    height: 12%;
+    border: none;
+}
 
 
 

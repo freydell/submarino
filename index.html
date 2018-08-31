@@ -1,79 +1,57 @@
-<!DOCTYPE html> 
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-	<title>Submarino</title>
-	<link rel="stylesheet" type="text/css" href="css/main.css">
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <title>Submarino</title>
 </head>
 
+<body>
+    <section id="home" class="show">
 
-	<body bgcolor="#dddddd">
-
-        <br>
-       	<section id="inicio"> 
-			<div class="estilo_inicio">
-                <img class="barra" src="img/barra-carga.gif" width="350" height="50">
-            </div>
-		</section>
-
-    <section id="menu" class="d-none"> 
-        <div class="estilo_menu">
-
-            <center><input id="b1" type="image" src="img/jugar.png" width="225" height="75"/></center>
+        <img src="" alt="" id="info_home">
+        <div id="botones">
+            <input id="play_home" class="botones_home" type="image" src="img/img/jugar.png" />
             <br>
-            <center><input id="b2" type="image" src="img/instrucciones.png"  width="225" height="75"/></center>
+            <input id="record_home" class="botones_home" type="image" src="img/img/instrucciones.png"  />
             <br>
-            <center><input id="b3" type="image" src="img/creditos.png" width="225" height="75"/></center>
-            
+            <input id="creditos_home" class="botones_home" type="image" src="img/img/creditos.png" />
         </div>
     </section>
 
-
-
-    <section id="juego" class="d-none"> 
-        <div class="estilo_juego">
-
-
-
-
-
-            <input class="b4 posicion_atras" type="image" src="img/atrasmall.png">
-
-
-
-
-
-        </div>
+    <section id="record" class="hide">
+        <input id="back_from_record" type="image" src="img/img/atrasmall.png">
     </section>
 
 
-    <section id="instrucciones" class="d-none"> 
-        <div class="estilo_instrucciones">
-
-            <input class="b4 posicion_atras" type="image" src="img/atrasmall.png">
-
-        </div>
+    <section id="credits" class="hide">
+        <input id="back_from_credits" type="image" src="img/img/atrasmall.png">
     </section>
 
 
-
-    <section id="creditos" class="d-none">      
-        <div class="estilo_creditos">
-
-            <input class="b4 posicion_atras" type="image" src="img/atrasmall.png">
-
+    <section id="play" class="hide">
+        <div id="pausePopUp" class="hide">
+            <input id="restart_game" type="image" src="img/img/reiniciar.png" />
+            <input id="go_home" type="image" src="img/img/menu.png" />        
         </div>
+        
+        <div id="gameLost" class="hide">
+            <p id="puntaje"></p>
+            <input id="play_again" type="image" src="img/img/reiniciar.png" />
+        </div>
+
+        <button id="mvLeft"></button>
+        <canvas id="play_field"></canvas>
+        <span id="pts"></span>
+        <img id="pause" src="img/img/pausa.png" alt="Pause">
+        <button id="mvRight"></button>
     </section>
 
 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
-
-<script type="text/javascript" src="js/main.js"></script>
-
+    <script type="text/javascript" src="js/main.js"></script>    
 </body>
+
 </html>
