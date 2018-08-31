@@ -154,7 +154,7 @@ function move(valToMove) {
 let imgSubma = new Image(100,100);
 
 function initSubmarino() {
-    imgSubma.src = "./img/submarino.png";
+    imgSubma.src = "./img/sub.png";
 }
 
 
