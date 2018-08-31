@@ -189,20 +189,20 @@ function Obstaculo() {
 //cambia el nivel de los obstaculos
 function nuevoNivel(obstaculo_cambia, duracion) {
 
-    if (duracion < 2) {
-        obstaculo_cambia.lvl = 1.1;
+    if (duracion < 5) {
+        obstaculo_cambia.lvl = 1.0;
     } else if (duracion > 5 && duracion <= 10) {
-        obstaculo_cambia.lvl = 1.2;
+        obstaculo_cambia.lvl = 1.15;
 
     } else if (duracion > 10 && duracion <= 20) {
-        obstaculo_cambia.lvl = 1.5;
+        obstaculo_cambia.lvl = 1.2;
     } else if (duracion > 20 && duracion <= 30) {
-        obstaculo_cambia.lvl = 1.8;
+        obstaculo_cambia.lvl = 1.25;
     } else if (duracion > 30 && duracion <= 50) {
-        obstaculo_cambia.lvl = 2;
+        obstaculo_cambia.lvl = 1.3;
 
     } else if (duracion > 50 && duracion <= 60) {
-        obstaculo_cambia.lvl = 3;
+        obstaculo_cambia.lvl = 1.35;
 
     }
 }
