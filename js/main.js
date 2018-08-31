@@ -49,23 +49,23 @@ var imgs = [];
 var submarino = new submarinoPlayer();
 
 var imgAlga = new Image();
-imgAlga.src = "./img/img/algas1.png";
+imgAlga.src = "./img/algas1.png";
 imgs.push(imgAlga);
 
 var imgEstrella = new Image();
-imgEstrella.src = "./img/img/estrella2.png";
+imgEstrella.src = "./img/estrella2.png";
 imgs.push(imgEstrella);
 
 var imgPeces = new Image();
-imgPeces.src = "./img/img/pez.png";
+imgPeces.src = "./img/pez.png";
 imgs.push(imgPeces);
 
 var imgBotella = new Image();
-imgBotella.src = "./img/img/botella2.png";
+imgBotella.src = "./img/botella2.png";
 imgs.push(imgBotella);
 
 var imgAncla = new Image();
-imgAncla.src = "./img/img/ancla2.png";
+imgAncla.src = "./img/ancla2.png";
 imgs.push(imgAncla);
 
 function goToRecord(section) {
@@ -154,7 +154,7 @@ function move(valToMove) {
 let imgSubma = new Image(100,100);
 
 function initSubmarino() {
-    imgSubma.src = "./img/img/submarino.png";
+    imgSubma.src = "./img/submarino.png";
 }
 
 

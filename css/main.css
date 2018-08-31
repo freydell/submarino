@@ -23,7 +23,7 @@ section{
 
 /*menu*/
 #home{
-   background: url(../img/img/fondo-menu.png) no-repeat;
+   background: url(../img/fondo-menu.png) no-repeat;
     background-size: cover;
     z-index: -1;
 }
@@ -44,7 +44,7 @@ section{
 
 /*record*/
 #record{   
-    background: url(../img/img/fondo-instrucciones.png) no-repeat;
+    background: url(../img/fondo-instrucciones.png) no-repeat;
     background-size: cover; 
 
 }
@@ -61,7 +61,7 @@ section{
 
 /*creditos*/
 #credits{
-    background: url(../img/img/fondo-creditos.png) no-repeat;
+    background: url(../img/fondo-creditos.png) no-repeat;
     background-size: cover;
 }
 #back_from_credits{
@@ -86,7 +86,7 @@ section{
     
     width: 100%;
     height: -webkit-fill-available;
-    background: url(../img/img/fondo-juego.gif) no-repeat;
+    background: url(../img/fondo-juego.gif) no-repeat;
 	background-size: cover;
 }
 
@@ -98,7 +98,7 @@ section{
     height: 13%;
     border: none;    
     
-    background: url(../img/img/flecha-izq.png) no-repeat;
+    background: url(../img/flecha-izq.png) no-repeat;
 	background-size: cover; 
 }
 #mvRight{
@@ -109,7 +109,7 @@ section{
     height: 13%;
     border: none;
     
-    background: url(../img/img/flecha-der.png) no-repeat;
+    background: url(../img/flecha-der.png) no-repeat;
     background-size: cover; 
 }
 
@@ -177,7 +177,7 @@ section{
     z-index: 1;
     height: 100%;;
     width: 100%;
-    background: url(../img/img/fondo_perdida.png) no-repeat;
+    background: url(../img/fondo_perdida.png) no-repeat;
     background-size: cover; 
 }
 
