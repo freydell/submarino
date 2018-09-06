@@ -41,7 +41,7 @@ var ctx = canvas.getContext('2d');
 var pts = document.getElementById('pts');
 var puntos = 0;
 var cw = canvas.width, ch = canvas.height;
-var numObstaculos = Math.floor(cw / 55);
+var numObstaculos = Math.floor(cw/55);
 
 //iniciales
 var obtaculos = [];
@@ -67,6 +67,10 @@ imgs.push(imgBotella);
 var imgAncla = new Image();
 imgAncla.src = "./img/ancla2.png";
 imgs.push(imgAncla);
+
+var imgMoneda = new Image();
+imgMoneda.src = "./img/moneda3.png";
+imgs.push(imgMoneda);
 
 function goToRecord(section) {
     records.classList.remove('hide');
@@ -157,10 +161,11 @@ function initSubmarino() {
     imgSubma.src = "./img/sub.png";
 }
 
-
+var cantidad=Math.random();
 for (var i = 1; i <= numObstaculos; i++) {
+
     var obs = new Obstaculo();
-    var img = imgs[(Math.floor((Math.random() * 5) + 1)) - 1];
+    var img = imgs[(Math.floor((Math.random() * 6) + 1)) - 1];
     obs.img = img;
     obs.id = i;
     obs.x = ((cw / numObstaculos) * i) - 30;
@@ -170,6 +175,7 @@ for (var i = 1; i <= numObstaculos; i++) {
     obs.type = 0;
     obs.lvl = 1;
     obtaculos.push(obs);
+    
 }
 
 //Clase obstaculo
