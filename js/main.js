@@ -53,23 +53,23 @@ imgAlga.src = "./img/algas1.png";
 imgs.push(imgAlga);
 
 var imgEstrella = new Image();
-imgEstrella.src = "./img/estrella2.png";
+imgEstrella.src = "./img/estrella3.svg";
 imgs.push(imgEstrella);
 
 var imgPeces = new Image();
-imgPeces.src = "./img/pez.png";
+imgPeces.src = "./img/pez3.svg";
 imgs.push(imgPeces);
 
 var imgBotella = new Image();
-imgBotella.src = "./img/botella2.png";
+imgBotella.src = "./img/botella3.svg";
 imgs.push(imgBotella);
 
 var imgAncla = new Image();
-imgAncla.src = "./img/ancla2.png";
+imgAncla.src = "./img/ancla3.svg";
 imgs.push(imgAncla);
 
 var imgMoneda = new Image();
-imgMoneda.src = "./img/moneda3.png";
+imgMoneda.src = "./img/moneda2.svg";
 imgs.push(imgMoneda);
 
 function goToRecord(section) {
@@ -158,7 +158,7 @@ function move(valToMove) {
 let imgSubma = new Image(100,100);
 
 function initSubmarino() {
-    imgSubma.src = "./img/sub.png";
+    imgSubma.src = "./img/submarino3.svg";
 }
 
 var cantidad=Math.random();
