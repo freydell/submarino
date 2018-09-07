@@ -181,8 +181,31 @@ section{
     background-size: cover; 
 }
 
+#moneda{
+    
+    position: absolute;
+    top: 0.5%;
+    /*margin-left: : 52% !important;*/
+    height: 3%;
+    width: 5%;
+    color: #000000;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 30px;
 
-
+}
+#puntosMoneda{
+    
+    position: absolute;
+    text-align: center;
+    left: 10%
+    height: 30px;
+    width: 100px;
+    color: #000000;
+    margin: auto;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 25px;
+    
+}
 #puntaje{
     
     margin: auto;

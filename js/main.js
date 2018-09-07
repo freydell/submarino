@@ -38,6 +38,8 @@ var play_again = document.getElementById('play_again');
 var go_home = document.getElementById('go_home');
 
 var ctx = canvas.getContext('2d');
+var puntosMoneda = document.getElementById('puntosMoneda');
+var ptsMoneda = 0;
 var pts = document.getElementById('pts');
 var puntos = 0;
 var cw = canvas.width, ch = canvas.height;
@@ -71,6 +73,8 @@ imgs.push(imgAncla);
 var imgMoneda = new Image();
 imgMoneda.src = "./img/moneda2.svg";
 imgs.push(imgMoneda);
+
+
 
 function goToRecord(section) {
     records.classList.remove('hide');
@@ -161,7 +165,6 @@ function initSubmarino() {
     imgSubma.src = "./img/submarino3.svg";
 }
 
-var cantidad=Math.random();
 for (var i = 1; i <= numObstaculos; i++) {
 
     var obs = new Obstaculo();
@@ -177,6 +180,7 @@ for (var i = 1; i <= numObstaculos; i++) {
     obtaculos.push(obs);
     
 }
+puntosMoneda.textContent = 0;
 
 //Clase obstaculo
 function Obstaculo() {
@@ -185,7 +189,7 @@ function Obstaculo() {
         if (y > ch) {
             this.k = 0;
             this.y = Math.floor((Math.random() * Y) + -10);
-            this.img = imgs[(Math.floor((Math.random() * 5) + 1)) - 1];
+            this.img = imgs[(Math.floor((Math.random() * 6) + 1)) - 1];
             nuevoNivel(this, roundPts(puntos));
         }
         ctx.drawImage(this.img, x, y, R, R);
@@ -238,19 +242,36 @@ function roundPts() {
 //funcion para detectar colisiones
 function collitions() {
     obtaculos.forEach((obstaculo) => {
-        let xDistance = submarino.x - obstaculo.x;
-        let yDistance = submarino.y - ((obstaculo.y + obstaculo.k) * obstaculo.lvl);
+        if(obstaculo.img!=imgMoneda){
+            let xDistance = submarino.x - obstaculo.x;
+            let yDistance = submarino.y - ((obstaculo.y + obstaculo.k) * obstaculo.lvl);
 
-        var hit = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
-        var t = (submarino.size / 2 + obstaculo.r / 2);
-        if (hit <= t) {
-            cancelAnimationFrame(animateFrameRequest);
-            gameLost.classList.remove('hide');
-            gameLost.classList.add('show');
-            document.getElementById('puntaje').textContent = roundPts(puntos) + ' Segundos';
+            var hit = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
+            var t = (submarino.size / 2 + obstaculo.r / 2);
+            if (hit <= t) {
+                cancelAnimationFrame(animateFrameRequest);
+                gameLost.classList.remove('hide');
+                gameLost.classList.add('show');
+                document.getElementById('puntaje').textContent = roundPts(puntos) + ' Segundos';
+            }
+        }
+        else if(obstaculo.img==imgMoneda){
+            let xDistance = submarino.x - obstaculo.x;
+            let yDistance = submarino.y - ((obstaculo.y + obstaculo.k) * obstaculo.lvl);
+
+            var hit = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
+            var t = (submarino.size / 2 + obstaculo.r / 2);
+            if (hit <= t) {
+                ptsMoneda += 1;
+                puntosMoneda.textContent = roundPtsMoneda(ptsMoneda);
+            }
         }
     });
 }
+function roundPtsMoneda() {
+    return Math.floor(ptsMoneda / 28);
+}
+
 
 //pausar el juego
 function pauseGame() {
@@ -270,6 +291,7 @@ function restartGame() {
     setTimeout(() => {
         animateFrameRequest = requestAnimationFrame(animate);
     }, 100);
+
 }
 function restarPositions() {
     mvLeft.style.zIndex = 0;
@@ -285,6 +307,8 @@ function restarPositions() {
     gameLost.classList.remove('show');
     gameLost.classList.add('hide');
     puntos = 0;
+    ptsMoneda=0;
+    puntosMoneda.textContent = ptsMoneda;
 
 }
 //volver a crear una nueva partida
