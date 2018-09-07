@@ -252,7 +252,8 @@ function collitions() {
                 cancelAnimationFrame(animateFrameRequest);
                 gameLost.classList.remove('hide');
                 gameLost.classList.add('show');
-                document.getElementById('puntaje').textContent = roundPts(puntos) + ' Segundos';
+                document.getElementById('puntaje').textContent = roundPts(puntos) + ' Segundos ';
+                document.getElementById('puntaje2').textContent = roundPtsMoneda(ptsMoneda) + ' Monedas';
             }
         }
         else if(obstaculo.img==imgMoneda){

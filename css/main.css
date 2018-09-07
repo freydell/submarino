@@ -209,7 +209,15 @@ section{
 #puntaje{
     
     margin: auto;
-    margin-top: 80%;
+    margin-top: 70%;
+    color: #E1f9EC;
+    font-size: 250%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    
+}
+#puntaje2{
+    
+    margin: auto;
     color: #E1f9EC;
     font-size: 250%;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
