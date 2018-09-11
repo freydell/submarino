@@ -159,10 +159,10 @@ function move(valToMove) {
     }
 }
 
-let imgSubma = new Image(100,100);
+let imgSubma = new Image(50,18);
 
 function initSubmarino() {
-    imgSubma.src = "./img/submarino3.svg";
+    imgSubma.src = "./img/sub-final.png";
 }
 
 for (var i = 1; i <= numObstaculos; i++) {
@@ -221,7 +221,7 @@ var animateFrameRequest;
 //function que anima los objetos del juego
 function animate() {
     ctx.clearRect(0, 0, cw, ch);
-    ctx.drawImage(imgSubma, submarino.x, submarino.y, 40,15);
+    ctx.drawImage(imgSubma, submarino.x, submarino.y, 50,18);
 
     //obstaculos
     obtaculos.forEach((element) => {
