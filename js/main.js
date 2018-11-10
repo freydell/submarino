@@ -38,10 +38,12 @@ var play_again = document.getElementById('play_again');
 var go_home = document.getElementById('go_home');
 
 var ctx = canvas.getContext('2d');
+var puntosMoneda = document.getElementById('puntosMoneda');
+var ptsMoneda = 0;
 var pts = document.getElementById('pts');
 var puntos = 0;
 var cw = canvas.width, ch = canvas.height;
-var numObstaculos = Math.floor(cw / 55);
+var numObstaculos = Math.floor(cw/55);
 
 //iniciales
 var obtaculos = [];
@@ -53,20 +55,26 @@ imgAlga.src = "./img/algas1.png";
 imgs.push(imgAlga);
 
 var imgEstrella = new Image();
-imgEstrella.src = "./img/estrella2.png";
+imgEstrella.src = "./img/estrella3.svg";
 imgs.push(imgEstrella);
 
 var imgPeces = new Image();
-imgPeces.src = "./img/pez.png";
+imgPeces.src = "./img/pez3.svg";
 imgs.push(imgPeces);
 
 var imgBotella = new Image();
-imgBotella.src = "./img/botella2.png";
+imgBotella.src = "./img/botella3.svg";
 imgs.push(imgBotella);
 
 var imgAncla = new Image();
-imgAncla.src = "./img/ancla2.png";
+imgAncla.src = "./img/ancla3.svg";
 imgs.push(imgAncla);
+
+var imgMoneda = new Image();
+imgMoneda.src = "./img/moneda2.svg";
+imgs.push(imgMoneda);
+
+
 
 function goToRecord(section) {
     records.classList.remove('hide');
@@ -151,16 +159,16 @@ function move(valToMove) {
     }
 }
 
-let imgSubma = new Image(100,100);
+let imgSubma = new Image(50,18);
 
 function initSubmarino() {
-    imgSubma.src = "./img/submarino.png";
+    imgSubma.src = "./img/sub-final.png";
 }
 
-
 for (var i = 1; i <= numObstaculos; i++) {
+
     var obs = new Obstaculo();
-    var img = imgs[(Math.floor((Math.random() * 5) + 1)) - 1];
+    var img = imgs[(Math.floor((Math.random() * 6) + 1)) - 1];
     obs.img = img;
     obs.id = i;
     obs.x = ((cw / numObstaculos) * i) - 30;
@@ -170,7 +178,9 @@ for (var i = 1; i <= numObstaculos; i++) {
     obs.type = 0;
     obs.lvl = 1;
     obtaculos.push(obs);
+    
 }
+puntosMoneda.textContent = 0;
 
 //Clase obstaculo
 function Obstaculo() {
@@ -179,7 +189,7 @@ function Obstaculo() {
         if (y > ch) {
             this.k = 0;
             this.y = Math.floor((Math.random() * Y) + -10);
-            this.img = imgs[(Math.floor((Math.random() * 5) + 1)) - 1];
+            this.img = imgs[(Math.floor((Math.random() * 6) + 1)) - 1];
             nuevoNivel(this, roundPts(puntos));
         }
         ctx.drawImage(this.img, x, y, R, R);
@@ -189,20 +199,20 @@ function Obstaculo() {
 //cambia el nivel de los obstaculos
 function nuevoNivel(obstaculo_cambia, duracion) {
 
-    if (duracion < 2) {
-        obstaculo_cambia.lvl = 1.1;
+    if (duracion < 5) {
+        obstaculo_cambia.lvl = 1.0;
     } else if (duracion > 5 && duracion <= 10) {
-        obstaculo_cambia.lvl = 1.2;
+        obstaculo_cambia.lvl = 1.15;
 
     } else if (duracion > 10 && duracion <= 20) {
-        obstaculo_cambia.lvl = 1.5;
+        obstaculo_cambia.lvl = 1.2;
     } else if (duracion > 20 && duracion <= 30) {
-        obstaculo_cambia.lvl = 1.8;
+        obstaculo_cambia.lvl = 1.25;
     } else if (duracion > 30 && duracion <= 50) {
-        obstaculo_cambia.lvl = 2;
+        obstaculo_cambia.lvl = 1.3;
 
     } else if (duracion > 50 && duracion <= 60) {
-        obstaculo_cambia.lvl = 3;
+        obstaculo_cambia.lvl = 1.35;
 
     }
 }
@@ -211,7 +221,7 @@ var animateFrameRequest;
 //function que anima los objetos del juego
 function animate() {
     ctx.clearRect(0, 0, cw, ch);
-    ctx.drawImage(imgSubma, submarino.x, submarino.y, 40,15);
+    ctx.drawImage(imgSubma, submarino.x, submarino.y, 50,18);
 
     //obstaculos
     obtaculos.forEach((element) => {
@@ -232,19 +242,37 @@ function roundPts() {
 //funcion para detectar colisiones
 function collitions() {
     obtaculos.forEach((obstaculo) => {
-        let xDistance = submarino.x - obstaculo.x;
-        let yDistance = submarino.y - ((obstaculo.y + obstaculo.k) * obstaculo.lvl);
+        if(obstaculo.img!=imgMoneda){
+            let xDistance = submarino.x - obstaculo.x;
+            let yDistance = submarino.y - ((obstaculo.y + obstaculo.k) * obstaculo.lvl);
 
-        var hit = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
-        var t = (submarino.size / 2 + obstaculo.r / 2);
-        if (hit <= t) {
-            cancelAnimationFrame(animateFrameRequest);
-            gameLost.classList.remove('hide');
-            gameLost.classList.add('show');
-            document.getElementById('puntaje').textContent = roundPts(puntos) + ' Segundos';
+            var hit = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
+            var t = (submarino.size / 2 + obstaculo.r / 2);
+            if (hit <= t) {
+                cancelAnimationFrame(animateFrameRequest);
+                gameLost.classList.remove('hide');
+                gameLost.classList.add('show');
+                document.getElementById('puntaje').textContent = roundPts(puntos) + ' Segundos ';
+                document.getElementById('puntaje2').textContent = roundPtsMoneda(ptsMoneda) + ' Monedas';
+            }
+        }
+        else if(obstaculo.img==imgMoneda){
+            let xDistance = submarino.x - obstaculo.x;
+            let yDistance = submarino.y - ((obstaculo.y + obstaculo.k) * obstaculo.lvl);
+
+            var hit = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
+            var t = (submarino.size / 2 + obstaculo.r / 2);
+            if (hit <= t) {
+                ptsMoneda += 1;
+                puntosMoneda.textContent = roundPtsMoneda(ptsMoneda);
+            }
         }
     });
 }
+function roundPtsMoneda() {
+    return Math.floor(ptsMoneda / 28);
+}
+
 
 //pausar el juego
 function pauseGame() {
@@ -264,6 +292,7 @@ function restartGame() {
     setTimeout(() => {
         animateFrameRequest = requestAnimationFrame(animate);
     }, 100);
+
 }
 function restarPositions() {
     mvLeft.style.zIndex = 0;
@@ -279,6 +308,8 @@ function restarPositions() {
     gameLost.classList.remove('show');
     gameLost.classList.add('hide');
     puntos = 0;
+    ptsMoneda=0;
+    puntosMoneda.textContent = ptsMoneda;
 
 }
 //volver a crear una nueva partida
@@ -289,7 +320,9 @@ function goPlayAgain() {
     }, 500);
 }
 
-window.addEventListener('load', function () {
+window.addEventListener('load',init);
+
+function init() {
 
     btnCredits.onclick = creditos;
     btnPlay.onclick = playGame;
@@ -323,5 +356,34 @@ window.addEventListener('load', function () {
         goToRecord('home');
     });
 
-});
+}
 
+var app = {
+    // Application Constructor
+    initialize: function() {
+        document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+    },
+
+    // deviceready Event Handler
+    //
+    // Bind any cordova events here. Common events are:
+    // 'pause', 'resume', etc.
+    onDeviceReady: function() {
+        this.receivedEvent('deviceready');
+        //init();
+    },
+
+    // Update DOM on a Received Event
+    receivedEvent: function(id) {
+        var parentElement = document.getElementById(id);
+        var listeningElement = parentElement.querySelector('.listening');
+        var receivedElement = parentElement.querySelector('.received');
+
+        listeningElement.setAttribute('style', 'display:none;');
+        receivedElement.setAttribute('style', 'display:block;');
+
+        console.log('Received Event: ' + id);
+    }
+};
+
+app.initialize();
