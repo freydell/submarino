@@ -9,6 +9,7 @@ const Y = -100;
 //variables de seccion
 home = this.document.getElementById('home');
 records = this.document.getElementById('record');
+puntajemaximo = this.document.getElementById('puntajemaximo');
 credits = this.document.getElementById('credits');
 play = this.document.getElementById('play');
 
@@ -22,6 +23,7 @@ var popUp = document.getElementById('popUp');
 //variables  menus
 var backFromRecord = document.getElementById('back_from_record');
 var backFromCredits = document.getElementById('back_from_credits');
+var backFromPuntajeMaximo = document.getElementById('back_from_puntajemaximo');
 
 //variables para mover el personaje 
 var mvLeft = document.getElementById('mvLeft');
@@ -36,6 +38,8 @@ var btnRecordPause = document.getElementById('record_pause');
 var btnRestartGame = document.getElementById('restart_game');
 var play_again = document.getElementById('play_again');
 var go_home = document.getElementById('go_home');
+var go_record = document.getElementById('go_record');
+
 
 var ctx = canvas.getContext('2d');
 var puntosMoneda = document.getElementById('puntosMoneda');
@@ -80,6 +84,15 @@ function goToRecord(section) {
     records.classList.remove('hide');
     records.classList.add('show');
     records.classList.add(section);
+
+    document.getElementById(section).classList.remove('show');
+    document.getElementById(section).classList.add('hide');
+}
+
+function goToPuntajeMaximo(section) {
+    puntajemaximo.classList.remove('hide');
+    puntajemaximo.classList.add('show');
+    puntajemaximo.classList.add(section);
 
     document.getElementById(section).classList.remove('show');
     document.getElementById(section).classList.add('hide');
@@ -239,6 +252,8 @@ function roundPts() {
     return Math.floor(puntos / 60);
 }
 
+
+
 //funcion para detectar colisiones
 function collitions() {
     obtaculos.forEach((obstaculo) => {
@@ -255,6 +270,14 @@ function collitions() {
                 document.getElementById('puntaje').textContent = roundPts(puntos) + ' Segundos ';
                 document.getElementById('puntaje2').textContent = roundPtsMoneda(ptsMoneda) + ' Monedas';
             }
+            localStorage.setItem('lastScore', roundPts(puntos));
+            if ((parseInt(localStorage.getItem('lastScore')) >= parseInt(localStorage.getItem('maxScore')))) 
+            {
+                localStorage.setItem('maxScore', localStorage.getItem('lastScore'));
+            }
+            document.getElementById('score').textContent = localStorage.getItem('maxScore') + ' Segundos';
+            document.getElementById('scoresmall').textContent = localStorage.getItem('maxScore') + ' Segundos';
+            document.getElementById('last_score').textContent = 'Actual puntaje: ' + localStorage.getItem('lastScore');
         }
         else if(obstaculo.img==imgMoneda){
             let xDistance = submarino.x - obstaculo.x;
@@ -324,6 +347,14 @@ window.addEventListener('load',init);
 
 function init() {
 
+    if (!localStorage.maxScore && !localStorage.lastScore) {
+        localStorage.setItem('maxScore', 0);
+        localStorage.setItem('lastScore', 0);
+    }
+    document.getElementById('score').textContent = localStorage.maxScore + ' Segundos';
+    document.getElementById('scoresmall').textContent = localStorage.maxScore + ' Segundos';
+    document.getElementById('last_score').textContent = 'Actual puntaje: ' + localStorage.lastScore;
+
     btnCredits.onclick = creditos;
     btnPlay.onclick = playGame;
 
@@ -347,9 +378,15 @@ function init() {
     backFromCredits.addEventListener('click', function () {
         goBack('credits');
     });
+    backFromPuntajeMaximo.addEventListener('click', function () {
+        goBack('puntajemaximo');
+    });
 
     go_home.addEventListener('click', function () {
         goHome();
+    });
+    go_record.addEventListener('click', function () {
+        goToPuntajeMaximo('play');
     });
 
     btnRecord.addEventListener('click', function () {

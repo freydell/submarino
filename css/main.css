@@ -42,7 +42,7 @@ section{
 
 
 
-/*record*/
+
 #record{   
     background: url(../img/fondo-instrucciones.png) no-repeat;
     background-size: cover;
@@ -58,8 +58,50 @@ section{
 
 }
 
-
-
+/*record*/
+#puntajemaximo{
+    background: url(../img/fondo-record.png) no-repeat;
+    background-size: cover;
+}
+#textmax{
+    color: #E1F9EC;
+    font-size: 220%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center;
+    margin-top: 40%;
+    margin-bottom: 10%;
+}
+#score{
+    color: #E1F9EC;
+    font-size: 220%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center;
+    margin-top: 7%;
+}
+#last_score{
+    color: #E1F9EC;
+    font-size: 125%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center;
+    padding-bottom: 4%;
+    margin: auto;
+    margin-top: 22%;
+}
+#back_from_puntajemaximo{
+    display: block;
+    margin: auto;
+    width: 40%;
+    height: 15%;
+    margin-left: 60%;
+}
+#maxscore{
+    position: absolute;
+    text-align: center;
+    z-index: 1;
+    height: 100%;;
+    width: 100%;
+    background-size: cover; 
+}
 
 /*creditos*/
 #credits{
@@ -148,7 +190,14 @@ section{
     width: 100%;
     background: rgba(0,0,0,0.7);
 }
-
+#scoresmall{
+    color: #E1F9EC;
+    margin-bottom: -5%;
+    font-size: 85%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center;
+    margin-top: 7%;
+}
 #restart_game{
     
     display: block;
@@ -171,6 +220,17 @@ section{
     height: 11%;
     border: none;
     text-align: center;    
+    font-size: 150%;
+    font-weight: bolder;
+    
+}
+#go_record{
+    
+    display: block;
+    margin: auto;
+    width: 53%;
+    height: 20%;
+    text-align: center;
     font-size: 150%;
     font-weight: bolder;
     
@@ -236,6 +296,7 @@ section{
     height: 12%;
     border: none;
 }
+
 
 
 
