@@ -36,7 +36,7 @@ var btnRecordPause = document.getElementById('record_pause');
 var btnRestartGame = document.getElementById('restart_game');
 var play_again = document.getElementById('play_again');
 var go_home = document.getElementById('go_home');
-
+var coinSound = document.getElementById('coinSound');
 var ctx = canvas.getContext('2d');
 var puntosMoneda = document.getElementById('puntosMoneda');
 var ptsMoneda = 0;
@@ -49,7 +49,8 @@ var numObstaculos = Math.floor(cw/55);
 var obtaculos = [];
 var imgs = [];
 var submarino = new submarinoPlayer();
-
+//Flag para powerUp
+var powerUp = false;
 var imgAlga = new Image();
 imgAlga.src = "./img/algas1.png";
 imgs.push(imgAlga);
@@ -74,7 +75,9 @@ var imgMoneda = new Image();
 imgMoneda.src = "./img/moneda2.svg";
 imgs.push(imgMoneda);
 
-
+var imgPowerUp = new Image();
+imgPowerUp.src = "./img/star.png";
+imgs.push(imgPowerUp);
 
 function goToRecord(section) {
     records.classList.remove('hide');
@@ -103,6 +106,7 @@ function playGame() {
 
     play.classList.remove('hide');
     play.classList.add('show');
+    initImagenes();
     initSubmarino();
     animate();
 
@@ -165,35 +169,51 @@ function initSubmarino() {
     imgSubma.src = "./img/sub-final.png";
 }
 
-for (var i = 1; i <= numObstaculos; i++) {
+function initImagenes(){
+    for (var i = 1; i <= numObstaculos; i++) {
 
-    var obs = new Obstaculo();
-    var img = imgs[(Math.floor((Math.random() * 6) + 1)) - 1];
-    obs.img = img;
-    obs.id = i;
-    obs.x = ((cw / numObstaculos) * i) - 30;
-    obs.y = Math.floor((Math.random() * Y) + -10);
-    obs.r = R;
-    obs.k = 0;
-    obs.type = 0;
-    obs.lvl = 1;
-    obtaculos.push(obs);
-    
+        var obs = new Obstaculo();
+        var img = imgs[(Math.floor((Math.random() * 7) + 1)) - 1];
+        obs.img = img;
+        obs.id = i;
+        obs.x = ((cw / numObstaculos) * i) - 30;
+        obs.y = Math.floor((Math.random() * Y) + -10);
+        obs.r = R;
+        obs.k = 0;
+        obs.type = 0;
+        obs.lvl = 1;
+        obtaculos.push(obs);
+        
+    }
 }
+
 puntosMoneda.textContent = 0;
 
 //Clase obstaculo
 function Obstaculo() {
     this.img, this.id, this.x, this.y, this.r, this.lvl, this.type;
     this.render = function (ctx, x, y, R) {
+    
         if (y > ch) {
             this.k = 0;
             this.y = Math.floor((Math.random() * Y) + -10);
-            this.img = imgs[(Math.floor((Math.random() * 6) + 1)) - 1];
+            this.img = imgs[(Math.floor((Math.random() * 7) + 1)) - 1];
             nuevoNivel(this, roundPts(puntos));
         }
         ctx.drawImage(this.img, x, y, R, R);
     }
+    //Convierte todos los objetos en monedas por un tiempo
+    this.renderCoins = function(ctx, x, y, R){
+        if (y > ch) {
+            this.k = 0;
+            this.y = Math.floor((Math.random() * Y) + -10);
+            this.img = imgs[5];
+            nuevoNivel(this, roundPts(puntos));
+        }
+        ctx.drawImage(this.img, x, y, R, R);
+    }
+
+    
 }
 
 //cambia el nivel de los obstaculos
@@ -218,20 +238,34 @@ function nuevoNivel(obstaculo_cambia, duracion) {
 }
 //animationFrame 
 var animateFrameRequest;
+
 //function que anima los objetos del juego
 function animate() {
     ctx.clearRect(0, 0, cw, ch);
     ctx.drawImage(imgSubma, submarino.x, submarino.y, 50,18);
-
-    //obstaculos
-    obtaculos.forEach((element) => {
-        element.k += 1;
-        element.render(ctx, element.x, (element.y + element.k) * element.lvl, R);
-    });
-    animateFrameRequest = requestAnimationFrame(animate);
-    collitions();
-    puntos += 1;
-    pts.textContent = roundPts(puntos);
+     //Renderiza los obstaculos dependiendo del poder
+    if(!powerUp){
+        obtaculos.forEach((element) => {
+            element.k += 1;
+            element.render(ctx, element.x, (element.y + element.k) * element.lvl, R);
+        });
+        animateFrameRequest = requestAnimationFrame(animate);
+        collitions();
+        puntos += 1;
+        pts.textContent = roundPts(puntos);
+    }
+    else{
+        obtaculos.forEach((element) => {
+            element.k += 1;
+            element.renderCoins(ctx, element.x, (element.y + element.k) * element.lvl, R);
+        });
+        animateFrameRequest = requestAnimationFrame(animate);
+        collitions();
+        puntos += 1;
+        pts.textContent = roundPts(puntos);
+    }
+   
+   
 }
 
 //redondea el valor de los puntos a segundos
@@ -242,7 +276,7 @@ function roundPts() {
 //funcion para detectar colisiones
 function collitions() {
     obtaculos.forEach((obstaculo) => {
-        if(obstaculo.img!=imgMoneda){
+        if(obstaculo.img!=imgMoneda && obstaculo.img != imgPowerUp){
             let xDistance = submarino.x - obstaculo.x;
             let yDistance = submarino.y - ((obstaculo.y + obstaculo.k) * obstaculo.lvl);
 
@@ -265,7 +299,22 @@ function collitions() {
             if (hit <= t) {
                 ptsMoneda += 1;
                 puntosMoneda.textContent = roundPtsMoneda(ptsMoneda);
+                coinSound.play();
+                setTimeout(hideCoin(obstaculo.img, submarino), 1);
             }
+        }
+        else if(obstaculo.img == imgPowerUp){
+            let xDistance = submarino.x - obstaculo.x;
+            let yDistance = submarino.y - ((obstaculo.y + obstaculo.k) * obstaculo.lvl);
+
+            var hit = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
+            var t = (submarino.size / 2 + obstaculo.r / 2);
+            if (hit <= t) {
+                powerUp = true;
+                setTimeout(() => {powerUp = false}, 8000);
+                setTimeout(hideCoin(obstaculo.img, submarino), 1);
+            }
+        
         }
     });
 }
@@ -355,6 +404,16 @@ function init() {
     btnRecord.addEventListener('click', function () {
         goToRecord('home');
     });
+
+}
+function hideCoin(coin, subMarine){
+    
+        ctx.clearRect(0, 0, cw, ch);
+        //ctx.clearRect(subMarine.x, subMarine.y+15, coin.width, coin.height+100);
+        ctx.beginPath();
+        //moveTo(subMarine.x, subMarine.y+20);
+        moveTo(0, 0);
+        
 
 }
 
