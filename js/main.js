@@ -47,7 +47,7 @@ var ptsMoneda = 0;
 var pts = document.getElementById('pts');
 var puntos = 0;
 var cw = canvas.width, ch = canvas.height;
-var numObstaculos = Math.floor(cw/55);
+var numObstaculos = Math.floor(cw / 55);
 
 //iniciales
 var obtaculos = [];
@@ -73,6 +73,10 @@ imgs.push(imgBotella);
 var imgAncla = new Image();
 imgAncla.src = "./img/ancla3.svg";
 imgs.push(imgAncla);
+
+var imgStar = new Image();
+imgStar.src = "./img/star.png";
+imgs.push(imgStar);
 
 var imgMoneda = new Image();
 imgMoneda.src = "./img/moneda2.svg";
@@ -159,6 +163,7 @@ function submarinoPlayer() {
     this.x = cw / 2;
     this.y = ch / 1.3;
     this.size = 8;
+    this.noInmune = true;
 
 }
 
@@ -172,7 +177,7 @@ function move(valToMove) {
     }
 }
 
-let imgSubma = new Image(50,18);
+let imgSubma = new Image(50, 18);
 
 function initSubmarino() {
     imgSubma.src = "./img/sub-final.png";
@@ -181,7 +186,7 @@ function initSubmarino() {
 for (var i = 1; i <= numObstaculos; i++) {
 
     var obs = new Obstaculo();
-    var img = imgs[(Math.floor((Math.random() * 6) + 1)) - 1];
+    var img = imgs[(Math.floor((Math.random() * 7) + 1)) - 1];
     obs.img = img;
     obs.id = i;
     obs.x = ((cw / numObstaculos) * i) - 30;
@@ -191,7 +196,7 @@ for (var i = 1; i <= numObstaculos; i++) {
     obs.type = 0;
     obs.lvl = 1;
     obtaculos.push(obs);
-    
+
 }
 puntosMoneda.textContent = 0;
 
@@ -202,7 +207,7 @@ function Obstaculo() {
         if (y > ch) {
             this.k = 0;
             this.y = Math.floor((Math.random() * Y) + -10);
-            this.img = imgs[(Math.floor((Math.random() * 6) + 1)) - 1];
+            this.img = imgs[(Math.floor((Math.random() * 7) + 1)) - 1];
             nuevoNivel(this, roundPts(puntos));
         }
         ctx.drawImage(this.img, x, y, R, R);
@@ -234,7 +239,7 @@ var animateFrameRequest;
 //function que anima los objetos del juego
 function animate() {
     ctx.clearRect(0, 0, cw, ch);
-    ctx.drawImage(imgSubma, submarino.x, submarino.y, 50,18);
+    ctx.drawImage(imgSubma, submarino.x, submarino.y, 50, 18);
 
     //obstaculos
     obtaculos.forEach((element) => {
@@ -257,7 +262,7 @@ function roundPts() {
 //funcion para detectar colisiones
 function collitions() {
     obtaculos.forEach((obstaculo) => {
-        if(obstaculo.img!=imgMoneda){
+        if (obstaculo.img != imgMoneda && submarino.noInmune && obstaculo.img != imgStar) {
             let xDistance = submarino.x - obstaculo.x;
             let yDistance = submarino.y - ((obstaculo.y + obstaculo.k) * obstaculo.lvl);
 
@@ -271,15 +276,14 @@ function collitions() {
                 document.getElementById('puntaje2').textContent = roundPtsMoneda(ptsMoneda) + ' Monedas';
             }
             localStorage.setItem('lastScore', roundPts(puntos));
-            if ((parseInt(localStorage.getItem('lastScore')) >= parseInt(localStorage.getItem('maxScore')))) 
-            {
+            if ((parseInt(localStorage.getItem('lastScore')) >= parseInt(localStorage.getItem('maxScore')))) {
                 localStorage.setItem('maxScore', localStorage.getItem('lastScore'));
             }
             document.getElementById('score').textContent = localStorage.getItem('maxScore') + ' Segundos';
-            document.getElementById('scoresmall').textContent = localStorage.getItem('maxScore') + ' Segundos';
+            document.getElementById('scoresmall').textContent = 'Record: ' + localStorage.getItem('maxScore') + ' Segundos';
             document.getElementById('last_score').textContent = 'Actual puntaje: ' + localStorage.getItem('lastScore');
         }
-        else if(obstaculo.img==imgMoneda){
+        else if (obstaculo.img == imgMoneda) {
             let xDistance = submarino.x - obstaculo.x;
             let yDistance = submarino.y - ((obstaculo.y + obstaculo.k) * obstaculo.lvl);
 
@@ -289,11 +293,39 @@ function collitions() {
                 ptsMoneda += 1;
                 puntosMoneda.textContent = roundPtsMoneda(ptsMoneda);
             }
+
+        }
+        else if (obstaculo.img == imgStar && submarino.noInmune) {
+            let xDistance = submarino.x - obstaculo.x;
+            let yDistance = submarino.y - ((obstaculo.y + obstaculo.k) * obstaculo.lvl);
+
+            var hit = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
+            var t = (submarino.size / 2 + obstaculo.r / 2);
+
+            if (hit <= t) {
+                pts.style.color = "red"
+                console.log(submarino.noInmune);
+                submarino.noInmune = false;
+                console.log(submarino.noInmune);
+                inmuneTime();
+            }
+
+
         }
     });
 }
 function roundPtsMoneda() {
     return Math.floor(ptsMoneda / 28);
+}
+
+function inmuneTime() {
+    setTimeout(function () {
+        submarino.noInmune = true;
+        console.log(submarino.noInmune);
+        pts.style.color = "white"
+        // canvas.style.background = 'url(./img/fondo-juego.gif) no-repeat';
+        // canvas.style.backgroundSize="cover";
+    }, 5000);
 }
 
 
@@ -331,7 +363,7 @@ function restarPositions() {
     gameLost.classList.remove('show');
     gameLost.classList.add('hide');
     puntos = 0;
-    ptsMoneda=0;
+    ptsMoneda = 0;
     puntosMoneda.textContent = ptsMoneda;
 
 }
@@ -343,7 +375,7 @@ function goPlayAgain() {
     }, 500);
 }
 
-window.addEventListener('load',init);
+window.addEventListener('load', init);
 
 function init() {
 
@@ -398,7 +430,7 @@ function init() {
 
 var app = {
     // Application Constructor
-    initialize: function() {
+    initialize: function () {
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
     },
 
@@ -406,13 +438,13 @@ var app = {
     //
     // Bind any cordova events here. Common events are:
     // 'pause', 'resume', etc.
-    onDeviceReady: function() {
+    onDeviceReady: function () {
         this.receivedEvent('deviceready');
         //init();
     },
 
     // Update DOM on a Received Event
-    receivedEvent: function(id) {
+    receivedEvent: function (id) {
         var parentElement = document.getElementById(id);
         var listeningElement = parentElement.querySelector('.listening');
         var receivedElement = parentElement.querySelector('.received');
