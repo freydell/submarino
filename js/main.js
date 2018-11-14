@@ -200,14 +200,14 @@ var i = 0;
 //Clase obstaculo
 function Obstaculo() {
     this.img, this.id, this.x, this.y, this.r, this.lvl, this.type, this.coin, this.powerUp;
-    
+    this.probabilities = [0, 0, 0, 1, 1, 1, 2, 2,2,3,3,3,4,4,4,5,5,5,6,6];
     this.render = function (ctx, x, y, R) {
     
         if (y > ch) {
             this.k = 0;
             this.y = Math.floor((Math.random() * Y) + -10);
             this.img = new Image();
-            var imgAux = imgs[(Math.floor((Math.random() * 7) + 1)) - 1];
+            var imgAux = imgs[this.probabilities[(Math.floor((Math.random() * 19) + 1)) - 1]];
             this.img.src = imgAux;
             this.coin = isCoin(this.img);
             this.powerUp = isPowerUp(this.img);
@@ -339,7 +339,7 @@ function collitions() {
                 puntosMoneda.textContent = roundPtsMoneda(ptsMoneda);
                 coinSound.play();
                 obstaculo.img.src = "";
-                //setTimeout(hideCoin(obstaculo.img, submarino), 1);
+                
             }
         }
         else if(obstaculo.isPowerUp()){
@@ -359,7 +359,7 @@ function collitions() {
                     moveForwardSound.play();
                     powerSound.currentTime = 0;
                 }, 10000);
-                //hideCoin(obstaculo.img, submarino);
+                
             }
         
         }
