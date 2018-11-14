@@ -503,6 +503,7 @@ function init() {
 
     btnCredits.onclick = creditos;
     btnPlay.onclick = playGame;
+    moveForwardSound.volume = 0.5;
     moveForwardSound.play();
     //game options
     pause.onclick = pauseGame;
