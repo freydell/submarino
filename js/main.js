@@ -36,7 +36,6 @@ var btnRecordPause = document.getElementById('record_pause');
 var btnRestartGame = document.getElementById('restart_game');
 var play_again = document.getElementById('play_again');
 var go_home = document.getElementById('go_home');
-var coinSound = document.getElementById('coinSound');
 var ctx = canvas.getContext('2d');
 var puntosMoneda = document.getElementById('puntosMoneda');
 var ptsMoneda = 0;
@@ -45,38 +44,44 @@ var puntos = 0;
 var cw = canvas.width, ch = canvas.height;
 var numObstaculos = Math.floor(cw/55);
 
+//Sonidos
+var coinSound = document.getElementById('coinSound');
+var explosionSound = document.getElementById('explosionSound');
+var moveForwardSound = document.getElementById('moveForward');
+var powerSound = document.getElementById('powerSound');
+
 //iniciales
 var obtaculos = [];
 var imgs = [];
 var submarino = new submarinoPlayer();
 //Flag para powerUp
 var powerUp = false;
-var imgAlga = new Image();
-imgAlga.src = "./img/algas1.png";
+//var imgAlga = new Image();
+var imgAlga = "./img/algas1.png";
 imgs.push(imgAlga);
 
-var imgEstrella = new Image();
-imgEstrella.src = "./img/estrella3.svg";
+//var imgEstrella = new Image();
+var imgEstrella = "./img/estrella3.svg";
 imgs.push(imgEstrella);
 
-var imgPeces = new Image();
-imgPeces.src = "./img/pez3.svg";
+//var imgPeces = new Image();
+var imgPeces = "./img/pez3.svg";
 imgs.push(imgPeces);
 
-var imgBotella = new Image();
-imgBotella.src = "./img/botella3.svg";
+//var imgBotella = new Image();
+var imgBotella = "./img/botella3.svg";
 imgs.push(imgBotella);
 
-var imgAncla = new Image();
-imgAncla.src = "./img/ancla3.svg";
+//var imgAncla = new Image();
+var imgAncla = "./img/ancla3.svg";
 imgs.push(imgAncla);
 
-var imgMoneda = new Image();
-imgMoneda.src = "./img/moneda2.svg";
+//var imgMoneda = new Image();
+var imgMoneda = "./img/moneda2.svg";
 imgs.push(imgMoneda);
 
-var imgPowerUp = new Image();
-imgPowerUp.src = "./img/star.png";
+//var imgPowerUp = new Image();
+var imgPowerUp = "./img/tesoro.png";
 imgs.push(imgPowerUp);
 
 function goToRecord(section) {
@@ -109,7 +114,7 @@ function playGame() {
     initImagenes();
     initSubmarino();
     animate();
-
+    
 }
 
 
@@ -137,7 +142,7 @@ function goHome() {
     play.classList.add('hide');
     pausePopUp.classList.remove('show');
     pausePopUp.classList.add('hide');
-
+    
     cancelAnimationFrame(animateFrameRequest);
     restarPositions();
 
@@ -174,7 +179,10 @@ function initImagenes(){
 
         var obs = new Obstaculo();
         var img = imgs[(Math.floor((Math.random() * 7) + 1)) - 1];
-        obs.img = img;
+        obs.img = new Image();
+        obs.img.src = img;
+        obs.coin = isCoin(obs.img);
+        obs.powerUp = isPowerUp(obs.img);
         obs.id = i;
         obs.x = ((cw / numObstaculos) * i) - 30;
         obs.y = Math.floor((Math.random() * Y) + -10);
@@ -188,32 +196,56 @@ function initImagenes(){
 }
 
 puntosMoneda.textContent = 0;
-
+var i = 0;
 //Clase obstaculo
 function Obstaculo() {
-    this.img, this.id, this.x, this.y, this.r, this.lvl, this.type;
+    this.img, this.id, this.x, this.y, this.r, this.lvl, this.type, this.coin, this.powerUp;
+    
     this.render = function (ctx, x, y, R) {
     
         if (y > ch) {
             this.k = 0;
             this.y = Math.floor((Math.random() * Y) + -10);
-            this.img = imgs[(Math.floor((Math.random() * 7) + 1)) - 1];
+            this.img = new Image();
+            var imgAux = imgs[(Math.floor((Math.random() * 7) + 1)) - 1];
+            this.img.src = imgAux;
+            this.coin = isCoin(this.img);
+            this.powerUp = isPowerUp(this.img);
             nuevoNivel(this, roundPts(puntos));
         }
-        ctx.drawImage(this.img, x, y, R, R);
+        ctx.drawImage(this.img, x, y, R, 10);
+        //console.log("Valores para crear img " + x +" "+ y+ " " + R + "Numero de img "+ i);
+        i++;
     }
     //Convierte todos los objetos en monedas por un tiempo
     this.renderCoins = function(ctx, x, y, R){
         if (y > ch) {
             this.k = 0;
             this.y = Math.floor((Math.random() * Y) + -10);
-            this.img = imgs[5];
+            this.img = new Image();
+            this.img.src = imgs[5];
+            this.coin = isCoin(this.img);
+            this.powerUp = isPowerUp(this.img);
             nuevoNivel(this, roundPts(puntos));
         }
-        ctx.drawImage(this.img, x, y, R, R);
+        ctx.drawImage(this.img, x, y, R, 10);
     }
 
+    this.isCoin = function(){
+        return this.coin;
+    }
+    this.isPowerUp = function(){
+        return this.powerUp;
+    }
     
+}
+
+this.isCoin = function(img){
+    return img.src === imgMoneda.replace(".","file:///D:/Universidad/Semestre%208/AppsMoviles/Submarino");
+}
+
+this.isPowerUp = function(img){
+    return img.src === imgPowerUp.replace(".","file:///D:/Universidad/Semestre%208/AppsMoviles/Submarino");
 }
 
 //cambia el nivel de los obstaculos
@@ -276,7 +308,11 @@ function roundPts() {
 //funcion para detectar colisiones
 function collitions() {
     obtaculos.forEach((obstaculo) => {
-        if(obstaculo.img!=imgMoneda && obstaculo.img != imgPowerUp){
+        //console.log("O: "+obstaculo.img.src);
+        //console.log("O.ic: "+obstaculo.isCoin());
+        //console.log("O.ipu: "+obstaculo.isPowerUp());
+        //console.log("M: "+imgMoneda.replace(".","file:///D:/Universidad/Semestre%208/AppsMoviles/Submarino"));
+        if(!obstaculo.isCoin() && !obstaculo.isPowerUp()){
             let xDistance = submarino.x - obstaculo.x;
             let yDistance = submarino.y - ((obstaculo.y + obstaculo.k) * obstaculo.lvl);
 
@@ -284,13 +320,15 @@ function collitions() {
             var t = (submarino.size / 2 + obstaculo.r / 2);
             if (hit <= t) {
                 cancelAnimationFrame(animateFrameRequest);
+                explosionSound.play();
+               
                 gameLost.classList.remove('hide');
                 gameLost.classList.add('show');
                 document.getElementById('puntaje').textContent = roundPts(puntos) + ' Segundos ';
                 document.getElementById('puntaje2').textContent = roundPtsMoneda(ptsMoneda) + ' Monedas';
             }
         }
-        else if(obstaculo.img==imgMoneda){
+        else if(obstaculo.isCoin()){
             let xDistance = submarino.x - obstaculo.x;
             let yDistance = submarino.y - ((obstaculo.y + obstaculo.k) * obstaculo.lvl);
 
@@ -300,19 +338,28 @@ function collitions() {
                 ptsMoneda += 1;
                 puntosMoneda.textContent = roundPtsMoneda(ptsMoneda);
                 coinSound.play();
-                setTimeout(hideCoin(obstaculo.img, submarino), 1);
+                obstaculo.img.src = "";
+                //setTimeout(hideCoin(obstaculo.img, submarino), 1);
             }
         }
-        else if(obstaculo.img == imgPowerUp){
+        else if(obstaculo.isPowerUp()){
             let xDistance = submarino.x - obstaculo.x;
             let yDistance = submarino.y - ((obstaculo.y + obstaculo.k) * obstaculo.lvl);
 
             var hit = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
             var t = (submarino.size / 2 + obstaculo.r / 2);
             if (hit <= t) {
+                obstaculo.img.src = "";
+                moveForwardSound.pause();
+                powerSound.play();
                 powerUp = true;
-                setTimeout(() => {powerUp = false}, 8000);
-                setTimeout(hideCoin(obstaculo.img, submarino), 1);
+                setTimeout(() => {
+                    powerUp = false;
+                    powerSound.pause();
+                    moveForwardSound.play();
+                    powerSound.currentTime = 0;
+                }, 10000);
+                //hideCoin(obstaculo.img, submarino);
             }
         
         }
@@ -375,7 +422,7 @@ function init() {
 
     btnCredits.onclick = creditos;
     btnPlay.onclick = playGame;
-
+    moveForwardSound.play();
     //game options
     pause.onclick = pauseGame;
     btnRestartGame.onclick = restartGame;
@@ -404,16 +451,12 @@ function init() {
     btnRecord.addEventListener('click', function () {
         goToRecord('home');
     });
-
-}
-function hideCoin(coin, subMarine){
+    //loop para la cancion de fondo
+    moveForwardSound.addEventListener('ended' , () => {
+        moveForwardSound.currentTime = 0;
+        moveForwardSound.play();
+    }, false);
     
-        ctx.clearRect(0, 0, cw, ch);
-        //ctx.clearRect(subMarine.x, subMarine.y+15, coin.width, coin.height+100);
-        ctx.beginPath();
-        //moveTo(subMarine.x, subMarine.y+20);
-        moveTo(0, 0);
-        
 
 }
 
