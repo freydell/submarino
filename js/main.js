@@ -25,7 +25,7 @@ var backFromRecord = document.getElementById('back_from_record');
 var backFromCredits = document.getElementById('back_from_credits');
 var backFromPuntajeMaximo = document.getElementById('back_from_puntajemaximo');
 
-//variables para mover el personaje 
+//variables para mover el personaje
 var mvLeft = document.getElementById('mvLeft');
 var mvRight = document.getElementById('mvRight');
 
@@ -49,40 +49,52 @@ var puntos = 0;
 var cw = canvas.width, ch = canvas.height;
 var numObstaculos = Math.floor(cw / 55);
 
+//Sonidos
+var coinSound = document.getElementById('coinSound');
+var explosionSound = document.getElementById('explosionSound');
+var moveForwardSound = document.getElementById('moveForward');
+var powerSound = document.getElementById('powerSound');
+
 //iniciales
 var obtaculos = [];
 var imgs = [];
 var submarino = new submarinoPlayer();
-
-var imgAlga = new Image();
-imgAlga.src = "./img/algas1.png";
+//Flag para powerUp
+var powerUp = false;
+//var imgAlga = new Image();
+var imgAlga = "./img/algas1.png";
 imgs.push(imgAlga);
 
-var imgEstrella = new Image();
-imgEstrella.src = "./img/estrella3.svg";
+//var imgEstrella = new Image();
+var imgEstrella = "./img/estrella3.svg";
 imgs.push(imgEstrella);
 
-var imgPeces = new Image();
-imgPeces.src = "./img/pez3.svg";
+//var imgPeces = new Image();
+var imgPeces = "./img/pez3.svg";
 imgs.push(imgPeces);
 
-var imgBotella = new Image();
-imgBotella.src = "./img/botella3.svg";
+//var imgBotella = new Image();
+var imgBotella = "./img/botella3.svg";
 imgs.push(imgBotella);
 
-var imgAncla = new Image();
-imgAncla.src = "./img/ancla3.svg";
+//var imgAncla = new Image();
+var imgAncla = "./img/ancla3.svg";
 imgs.push(imgAncla);
 
-var imgStar = new Image();
-imgStar.src = "./img/star.png";
-imgs.push(imgStar);
 
-var imgMoneda = new Image();
-imgMoneda.src = "./img/moneda2.svg";
+
+
+//var imgMoneda = new Image();
+//imgMoneda.src = "./img/moneda2.svg";
+var imgMoneda = "./img/moneda2.svg";
 imgs.push(imgMoneda);
 
+//var imgPowerUp = new Image();
+var imgPowerUp = "./img/tesoro.png";
+imgs.push(imgPowerUp);
 
+var imgStar = "./img/star.png";
+imgs.push(imgStar);
 
 function goToRecord(section) {
     records.classList.remove('hide');
@@ -120,6 +132,7 @@ function playGame() {
 
     play.classList.remove('hide');
     play.classList.add('show');
+    initImagenes();
     initSubmarino();
     animate();
 
@@ -183,35 +196,86 @@ function initSubmarino() {
     imgSubma.src = "./img/sub-final.png";
 }
 
-for (var i = 1; i <= numObstaculos; i++) {
+function initImagenes(){
+    for (var i = 1; i <= numObstaculos; i++) {
 
-    var obs = new Obstaculo();
-    var img = imgs[(Math.floor((Math.random() * 7) + 1)) - 1];
-    obs.img = img;
-    obs.id = i;
-    obs.x = ((cw / numObstaculos) * i) - 30;
-    obs.y = Math.floor((Math.random() * Y) + -10);
-    obs.r = R;
-    obs.k = 0;
-    obs.type = 0;
-    obs.lvl = 1;
-    obtaculos.push(obs);
+        var obs = new Obstaculo();
+        var img = imgs[(Math.floor((Math.random() * 8) + 1)) - 1];
+        obs.img = new Image();
+        obs.img.src = img;
+        obs.coin = isCoin(obs.img);
+        obs.powerUp = isPowerUp(obs.img);
+        obs.id = i;
+        obs.x = ((cw / numObstaculos) * i) - 30;
+        obs.y = Math.floor((Math.random() * Y) + -10);
+        obs.r = R;
+        obs.k = 0;
+        obs.type = 0;
+        obs.lvl = 1;
+        obtaculos.push(obs);
 
+    }
 }
-puntosMoneda.textContent = 0;
 
+puntosMoneda.textContent = 0;
+var i = 0;
 //Clase obstaculo
 function Obstaculo() {
-    this.img, this.id, this.x, this.y, this.r, this.lvl, this.type;
+    this.img, this.id, this.x, this.y, this.r, this.lvl, this.type, this.coin, this.powerUp;
+    this.probabilities = [0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 7, 7];
     this.render = function (ctx, x, y, R) {
+
         if (y > ch) {
             this.k = 0;
             this.y = Math.floor((Math.random() * Y) + -10);
-            this.img = imgs[(Math.floor((Math.random() * 7) + 1)) - 1];
+            this.img = new Image();
+            var imgAux = imgs[this.probabilities[(Math.floor((Math.random() * 21) + 1)) - 1]];
+            this.img.src = imgAux;
+            this.coin = isCoin(this.img);
+            this.powerUp = isPowerUp(this.img);
             nuevoNivel(this, roundPts(puntos));
         }
-        ctx.drawImage(this.img, x, y, R, R);
+        ctx.drawImage(this.img, x, y, R, 10);
+        //console.log("Valores para crear img " + x +" "+ y+ " " + R + "Numero de img "+ i);
+        i++;
     }
+    //Convierte todos los objetos en monedas por un tiempo
+    this.renderCoins = function(ctx, x, y, R){
+        if (y > ch) {
+            this.k = 0;
+            this.y = Math.floor((Math.random() * Y) + -10);
+            this.img = new Image();
+            this.img.src = imgs[5];
+            this.coin = isCoin(this.img);
+            this.star = isStar(this.img);
+            this.powerUp = isPowerUp(this.img);
+            nuevoNivel(this, roundPts(puntos));
+        }
+        ctx.drawImage(this.img, x, y, R, 10);
+    }
+
+    this.isCoin = function(){
+        return this.coin;
+    }
+    this.isPowerUp = function(){
+        return this.powerUp;
+    }
+    this.isStar = function(){
+      return this.star;
+    }
+
+}
+
+this.isCoin = function(img){
+    return img.src === imgMoneda.replace(".","file:///D:/Universidad/Semestre%208/AppsMoviles/Submarino");
+}
+
+this.isPowerUp = function(img){
+    return img.src === imgPowerUp.replace(".","file:///D:/Universidad/Semestre%208/AppsMoviles/Submarino");
+}
+
+this.isStar = function(img){
+    return img.src === imgStar.replace(".","file:///D:/Universidad/Semestre%208/AppsMoviles/Submarino");
 }
 
 //cambia el nivel de los obstaculos
@@ -234,22 +298,36 @@ function nuevoNivel(obstaculo_cambia, duracion) {
 
     }
 }
-//animationFrame 
+//animationFrame
 var animateFrameRequest;
+
 //function que anima los objetos del juego
 function animate() {
     ctx.clearRect(0, 0, cw, ch);
-    ctx.drawImage(imgSubma, submarino.x, submarino.y, 50, 18);
+    ctx.drawImage(imgSubma, submarino.x, submarino.y, 50,18);
+     //Renderiza los obstaculos dependiendo del poder
+    if(!powerUp){
+        obtaculos.forEach((element) => {
+            element.k += 1;
+            element.render(ctx, element.x, (element.y + element.k) * element.lvl, R);
+        });
+        animateFrameRequest = requestAnimationFrame(animate);
+        collitions();
+        puntos += 1;
+        pts.textContent = roundPts(puntos);
+    }
+    else{
+        obtaculos.forEach((element) => {
+            element.k += 1;
+            element.renderCoins(ctx, element.x, (element.y + element.k) * element.lvl, R);
+        });
+        animateFrameRequest = requestAnimationFrame(animate);
+        collitions();
+        puntos += 1;
+        pts.textContent = roundPts(puntos);
+    }
 
-    //obstaculos
-    obtaculos.forEach((element) => {
-        element.k += 1;
-        element.render(ctx, element.x, (element.y + element.k) * element.lvl, R);
-    });
-    animateFrameRequest = requestAnimationFrame(animate);
-    collitions();
-    puntos += 1;
-    pts.textContent = roundPts(puntos);
+
 }
 
 //redondea el valor de los puntos a segundos
@@ -262,7 +340,12 @@ function roundPts() {
 //funcion para detectar colisiones
 function collitions() {
     obtaculos.forEach((obstaculo) => {
-        if (obstaculo.img != imgMoneda && submarino.noInmune && obstaculo.img != imgStar) {
+        //console.log("O: "+obstaculo.img.src);
+        //console.log("O.ic: "+obstaculo.isCoin());
+        //console.log("O.ipu: "+obstaculo.isPowerUp());
+        //console.log("M: "+imgMoneda.replace(".","file:///D:/Universidad/Semestre%208/AppsMoviles/Submarino"));
+        //if (obstaculo.img != imgMoneda && submarino.noInmune && obstaculo.img != imgStar) {
+        if(!obstaculo.isCoin() && !obstaculo.isPowerUp() && obstaculo.img.src != imgStar.replace(".","file:///D:/Universidad/Semestre%208/AppsMoviles/Submarino") && submarino.noInmune){
             let xDistance = submarino.x - obstaculo.x;
             let yDistance = submarino.y - ((obstaculo.y + obstaculo.k) * obstaculo.lvl);
 
@@ -270,6 +353,8 @@ function collitions() {
             var t = (submarino.size / 2 + obstaculo.r / 2);
             if (hit <= t) {
                 cancelAnimationFrame(animateFrameRequest);
+                explosionSound.play();
+
                 gameLost.classList.remove('hide');
                 gameLost.classList.add('show');
                 document.getElementById('puntaje').textContent = roundPts(puntos) + ' Segundos ';
@@ -283,7 +368,7 @@ function collitions() {
             document.getElementById('scoresmall').textContent = 'Record: ' + localStorage.getItem('maxScore') + ' Segundos';
             document.getElementById('last_score').textContent = 'Actual puntaje: ' + localStorage.getItem('lastScore');
         }
-        else if (obstaculo.img == imgMoneda) {
+        else if(obstaculo.isCoin()){
             let xDistance = submarino.x - obstaculo.x;
             let yDistance = submarino.y - ((obstaculo.y + obstaculo.k) * obstaculo.lvl);
 
@@ -292,10 +377,13 @@ function collitions() {
             if (hit <= t) {
                 ptsMoneda += 1;
                 puntosMoneda.textContent = roundPtsMoneda(ptsMoneda);
+                coinSound.play();
+                obstaculo.img.src = "";
+
             }
 
         }
-        else if (obstaculo.img == imgStar && submarino.noInmune) {
+        else if (obstaculo.img.src === imgStar.replace(".","file:///D:/Universidad/Semestre%208/AppsMoviles/Submarino") && submarino.noInmune) {
             let xDistance = submarino.x - obstaculo.x;
             let yDistance = submarino.y - ((obstaculo.y + obstaculo.k) * obstaculo.lvl);
 
@@ -307,15 +395,38 @@ function collitions() {
                 console.log(submarino.noInmune);
                 submarino.noInmune = false;
                 console.log(submarino.noInmune);
+                moveForwardSound.pause();
+                powerSound.play();
                 inmuneTime();
             }
 
 
         }
+        else if(obstaculo.isPowerUp()){
+            let xDistance = submarino.x - obstaculo.x;
+            let yDistance = submarino.y - ((obstaculo.y + obstaculo.k) * obstaculo.lvl);
+
+            var hit = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
+            var t = (submarino.size / 2 + obstaculo.r / 2);
+            if (hit <= t) {
+                obstaculo.img.src = "";
+                moveForwardSound.pause();
+                powerSound.play();
+                powerUp = true;
+                setTimeout(() => {
+                    powerUp = false;
+                    powerSound.pause();
+                    moveForwardSound.play();
+                    powerSound.currentTime = 0;
+                }, 10000);
+
+            }
+
+        }
     });
 }
 function roundPtsMoneda() {
-    return Math.floor(ptsMoneda / 28);
+    return Math.floor(ptsMoneda / 25);
 }
 
 function inmuneTime() {
@@ -323,9 +434,12 @@ function inmuneTime() {
         submarino.noInmune = true;
         console.log(submarino.noInmune);
         pts.style.color = "white"
+        powerSound.pause();
+        powerSound.currentTime = 0;
+        moveForwardSound.play();
         // canvas.style.background = 'url(./img/fondo-juego.gif) no-repeat';
         // canvas.style.backgroundSize="cover";
-    }, 5000);
+    }, 10000);
 }
 
 
@@ -389,7 +503,7 @@ function init() {
 
     btnCredits.onclick = creditos;
     btnPlay.onclick = playGame;
-
+    moveForwardSound.play();
     //game options
     pause.onclick = pauseGame;
     btnRestartGame.onclick = restartGame;
@@ -424,6 +538,12 @@ function init() {
     btnRecord.addEventListener('click', function () {
         goToRecord('home');
     });
+    //loop para la cancion de fondo
+    moveForwardSound.addEventListener('ended' , () => {
+        moveForwardSound.currentTime = 0;
+        moveForwardSound.play();
+    }, false);
+
 
 }
 
@@ -457,4 +577,3 @@ var app = {
 };
 
 app.initialize();
-
