@@ -267,15 +267,15 @@ function Obstaculo() {
 }
 
 this.isCoin = function(img){
-    return img.src === imgMoneda.replace(".","file:///D:/Universidad/Semestre%208/AppsMoviles/Submarino");
+    return img.src.includes(imgMoneda.replace(".",""));
 }
 
 this.isPowerUp = function(img){
-    return img.src === imgPowerUp.replace(".","file:///D:/Universidad/Semestre%208/AppsMoviles/Submarino");
+    return img.src.includes(imgPowerUp.replace(".",""));
 }
 
 this.isStar = function(img){
-    return img.src === imgStar.replace(".","file:///D:/Universidad/Semestre%208/AppsMoviles/Submarino");
+    return img.src.includes(imgStar.replace(".",""));
 }
 
 //cambia el nivel de los obstaculos
@@ -383,7 +383,8 @@ function collitions() {
             }
 
         }
-        else if (obstaculo.img.src === imgStar.replace(".","file:///D:/Universidad/Semestre%208/AppsMoviles/Submarino") && submarino.noInmune) {
+        else if (obstaculo.img.src.includes(imgStar.replace('.','')) && submarino.noInmune) {
+            console.log("src Obs: " + obstaculo.img.src + " src Imgstar: " + imgStar);
             let xDistance = submarino.x - obstaculo.x;
             let yDistance = submarino.y - ((obstaculo.y + obstaculo.k) * obstaculo.lvl);
 
@@ -432,7 +433,7 @@ function roundPtsMoneda() {
 function inmuneTime() {
     setTimeout(function () {
         submarino.noInmune = true;
-        console.log(submarino.noInmune);
+        //console.log(submarino.noInmune);
         pts.style.color = "white"
         powerSound.pause();
         powerSound.currentTime = 0;
